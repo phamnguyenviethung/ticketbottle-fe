@@ -1,11 +1,26 @@
-import axios from "axios";
+import { getTokenFromLocalStorage } from '@/utils/authUtil';
+import axios, { AxiosInstance } from 'axios';
 
-const axiosClient = axios.create({
+export interface ApiResponse<T> {
+  data: T;
+  message: string;
+  statusCode: number;
+}
+
+const axiosClient: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 axiosClient.interceptors.request.use(
   function (config) {
+    const token = getTokenFromLocalStorage();
+    if (token) {
+      config.headers['Authorization'] = 'Bearer ' + token.accessToken;
+    }
+
     return config;
   },
   function (error) {

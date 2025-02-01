@@ -24,7 +24,7 @@ createRoot(document.getElementById("root")!).render(
         <Provider forcedTheme="light">
           <RouterProvider router={router} />
         </Provider>
-        <ReactQueryDevtools initialIsOpen={true} />
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </ErrorBoundary>
   </StrictMode>

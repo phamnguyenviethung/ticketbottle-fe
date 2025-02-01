@@ -11,60 +11,136 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as IndexImport } from './routes/index'
+import { Route as LayoutMainLayoutImport } from './routes/_layout/_main-layout'
+import { Route as LayoutAuthLayoutImport } from './routes/_layout/_auth-layout'
+import { Route as LayoutMainLayoutIndexImport } from './routes/_layout/_main-layout/index'
+import { Route as LayoutAuthLayoutAuthLoginImport } from './routes/_layout/_auth-layout/auth/login'
 
 // Create/Update Routes
 
-const IndexRoute = IndexImport.update({
+const LayoutMainLayoutRoute = LayoutMainLayoutImport.update({
+  id: '/_layout/_main-layout',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LayoutAuthLayoutRoute = LayoutAuthLayoutImport.update({
+  id: '/_layout/_auth-layout',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LayoutMainLayoutIndexRoute = LayoutMainLayoutIndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => LayoutMainLayoutRoute,
+} as any)
+
+const LayoutAuthLayoutAuthLoginRoute = LayoutAuthLayoutAuthLoginImport.update({
+  id: '/auth/login',
+  path: '/auth/login',
+  getParentRoute: () => LayoutAuthLayoutRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_layout/_auth-layout': {
+      id: '/_layout/_auth-layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LayoutAuthLayoutImport
+      parentRoute: typeof rootRoute
+    }
+    '/_layout/_main-layout': {
+      id: '/_layout/_main-layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LayoutMainLayoutImport
+      parentRoute: typeof rootRoute
+    }
+    '/_layout/_main-layout/': {
+      id: '/_layout/_main-layout/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof LayoutMainLayoutIndexImport
+      parentRoute: typeof LayoutMainLayoutImport
+    }
+    '/_layout/_auth-layout/auth/login': {
+      id: '/_layout/_auth-layout/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof LayoutAuthLayoutAuthLoginImport
+      parentRoute: typeof LayoutAuthLayoutImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface LayoutAuthLayoutRouteChildren {
+  LayoutAuthLayoutAuthLoginRoute: typeof LayoutAuthLayoutAuthLoginRoute
+}
+
+const LayoutAuthLayoutRouteChildren: LayoutAuthLayoutRouteChildren = {
+  LayoutAuthLayoutAuthLoginRoute: LayoutAuthLayoutAuthLoginRoute,
+}
+
+const LayoutAuthLayoutRouteWithChildren =
+  LayoutAuthLayoutRoute._addFileChildren(LayoutAuthLayoutRouteChildren)
+
+interface LayoutMainLayoutRouteChildren {
+  LayoutMainLayoutIndexRoute: typeof LayoutMainLayoutIndexRoute
+}
+
+const LayoutMainLayoutRouteChildren: LayoutMainLayoutRouteChildren = {
+  LayoutMainLayoutIndexRoute: LayoutMainLayoutIndexRoute,
+}
+
+const LayoutMainLayoutRouteWithChildren =
+  LayoutMainLayoutRoute._addFileChildren(LayoutMainLayoutRouteChildren)
+
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '': typeof LayoutMainLayoutRouteWithChildren
+  '/': typeof LayoutMainLayoutIndexRoute
+  '/auth/login': typeof LayoutAuthLayoutAuthLoginRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '': typeof LayoutAuthLayoutRouteWithChildren
+  '/': typeof LayoutMainLayoutIndexRoute
+  '/auth/login': typeof LayoutAuthLayoutAuthLoginRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexRoute
+  '/_layout/_auth-layout': typeof LayoutAuthLayoutRouteWithChildren
+  '/_layout/_main-layout': typeof LayoutMainLayoutRouteWithChildren
+  '/_layout/_main-layout/': typeof LayoutMainLayoutIndexRoute
+  '/_layout/_auth-layout/auth/login': typeof LayoutAuthLayoutAuthLoginRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '' | '/' | '/auth/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '' | '/' | '/auth/login'
+  id:
+    | '__root__'
+    | '/_layout/_auth-layout'
+    | '/_layout/_main-layout'
+    | '/_layout/_main-layout/'
+    | '/_layout/_auth-layout/auth/login'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  LayoutAuthLayoutRoute: typeof LayoutAuthLayoutRouteWithChildren
+  LayoutMainLayoutRoute: typeof LayoutMainLayoutRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  LayoutAuthLayoutRoute: LayoutAuthLayoutRouteWithChildren,
+  LayoutMainLayoutRoute: LayoutMainLayoutRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +153,29 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/_layout/_auth-layout",
+        "/_layout/_main-layout"
       ]
     },
-    "/": {
-      "filePath": "index.tsx"
+    "/_layout/_auth-layout": {
+      "filePath": "_layout/_auth-layout.tsx",
+      "children": [
+        "/_layout/_auth-layout/auth/login"
+      ]
+    },
+    "/_layout/_main-layout": {
+      "filePath": "_layout/_main-layout.tsx",
+      "children": [
+        "/_layout/_main-layout/"
+      ]
+    },
+    "/_layout/_main-layout/": {
+      "filePath": "_layout/_main-layout/index.tsx",
+      "parent": "/_layout/_main-layout"
+    },
+    "/_layout/_auth-layout/auth/login": {
+      "filePath": "_layout/_auth-layout/auth/login.tsx",
+      "parent": "/_layout/_auth-layout"
     }
   }
 }
