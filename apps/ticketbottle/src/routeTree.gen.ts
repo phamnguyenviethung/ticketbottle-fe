@@ -15,6 +15,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as LayoutMainLayoutImport } from './routes/_layout/_main-layout'
 import { Route as LayoutAuthLayoutImport } from './routes/_layout/_auth-layout'
+import { Route as LayoutMainLayoutEventEventIDImport } from './routes/_layout/_main-layout/event/$eventID'
 import { Route as LayoutAuthLayoutAuthLoginImport } from './routes/_layout/_auth-layout/auth/login'
 
 // Create Virtual Routes
@@ -42,6 +43,13 @@ const LayoutMainLayoutIndexLazyRoute = LayoutMainLayoutIndexLazyImport.update({
 } as any).lazy(() =>
   import('./routes/_layout/_main-layout/index.lazy').then((d) => d.Route),
 )
+
+const LayoutMainLayoutEventEventIDRoute =
+  LayoutMainLayoutEventEventIDImport.update({
+    id: '/event/$eventID',
+    path: '/event/$eventID',
+    getParentRoute: () => LayoutMainLayoutRoute,
+  } as any)
 
 const LayoutAuthLayoutAuthLoginRoute = LayoutAuthLayoutAuthLoginImport.update({
   id: '/auth/login',
@@ -81,6 +89,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutAuthLayoutAuthLoginImport
       parentRoute: typeof LayoutAuthLayoutImport
     }
+    '/_layout/_main-layout/event/$eventID': {
+      id: '/_layout/_main-layout/event/$eventID'
+      path: '/event/$eventID'
+      fullPath: '/event/$eventID'
+      preLoaderRoute: typeof LayoutMainLayoutEventEventIDImport
+      parentRoute: typeof LayoutMainLayoutImport
+    }
   }
 }
 
@@ -99,10 +114,12 @@ const LayoutAuthLayoutRouteWithChildren =
 
 interface LayoutMainLayoutRouteChildren {
   LayoutMainLayoutIndexLazyRoute: typeof LayoutMainLayoutIndexLazyRoute
+  LayoutMainLayoutEventEventIDRoute: typeof LayoutMainLayoutEventEventIDRoute
 }
 
 const LayoutMainLayoutRouteChildren: LayoutMainLayoutRouteChildren = {
   LayoutMainLayoutIndexLazyRoute: LayoutMainLayoutIndexLazyRoute,
+  LayoutMainLayoutEventEventIDRoute: LayoutMainLayoutEventEventIDRoute,
 }
 
 const LayoutMainLayoutRouteWithChildren =
@@ -112,12 +129,14 @@ export interface FileRoutesByFullPath {
   '': typeof LayoutMainLayoutRouteWithChildren
   '/': typeof LayoutMainLayoutIndexLazyRoute
   '/auth/login': typeof LayoutAuthLayoutAuthLoginRoute
+  '/event/$eventID': typeof LayoutMainLayoutEventEventIDRoute
 }
 
 export interface FileRoutesByTo {
   '': typeof LayoutAuthLayoutRouteWithChildren
   '/': typeof LayoutMainLayoutIndexLazyRoute
   '/auth/login': typeof LayoutAuthLayoutAuthLoginRoute
+  '/event/$eventID': typeof LayoutMainLayoutEventEventIDRoute
 }
 
 export interface FileRoutesById {
@@ -126,19 +145,21 @@ export interface FileRoutesById {
   '/_layout/_main-layout': typeof LayoutMainLayoutRouteWithChildren
   '/_layout/_main-layout/': typeof LayoutMainLayoutIndexLazyRoute
   '/_layout/_auth-layout/auth/login': typeof LayoutAuthLayoutAuthLoginRoute
+  '/_layout/_main-layout/event/$eventID': typeof LayoutMainLayoutEventEventIDRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/' | '/auth/login'
+  fullPaths: '' | '/' | '/auth/login' | '/event/$eventID'
   fileRoutesByTo: FileRoutesByTo
-  to: '' | '/' | '/auth/login'
+  to: '' | '/' | '/auth/login' | '/event/$eventID'
   id:
     | '__root__'
     | '/_layout/_auth-layout'
     | '/_layout/_main-layout'
     | '/_layout/_main-layout/'
     | '/_layout/_auth-layout/auth/login'
+    | '/_layout/_main-layout/event/$eventID'
   fileRoutesById: FileRoutesById
 }
 
@@ -175,7 +196,8 @@ export const routeTree = rootRoute
     "/_layout/_main-layout": {
       "filePath": "_layout/_main-layout.tsx",
       "children": [
-        "/_layout/_main-layout/"
+        "/_layout/_main-layout/",
+        "/_layout/_main-layout/event/$eventID"
       ]
     },
     "/_layout/_main-layout/": {
@@ -185,6 +207,10 @@ export const routeTree = rootRoute
     "/_layout/_auth-layout/auth/login": {
       "filePath": "_layout/_auth-layout/auth/login.tsx",
       "parent": "/_layout/_auth-layout"
+    },
+    "/_layout/_main-layout/event/$eventID": {
+      "filePath": "_layout/_main-layout/event/$eventID.tsx",
+      "parent": "/_layout/_main-layout"
     }
   }
 }

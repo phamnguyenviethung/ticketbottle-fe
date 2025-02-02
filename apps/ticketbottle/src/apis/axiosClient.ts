@@ -1,8 +1,5 @@
 import useAppStore from '@/store/useStore';
-import {
-  clearAuthLocalStorage,
-  getTokenFromLocalStorage,
-} from '@/utils/authUtil';
+import { getTokenFromLocalStorage } from '@/utils/authUtil';
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import authAPI from './auth.api';
 

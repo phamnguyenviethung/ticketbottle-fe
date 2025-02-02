@@ -1,9 +1,9 @@
 import authAPI from '@/apis/auth.api';
-import { toaster } from '@/components/ui/toaster';
 import useAppStore from '@/store/useStore';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import { LoginFormValues } from '../components/LoginForm';
+import { toaster } from '@/shared/components/ui/toaster';
 
 const useLogin = () => {
   const loginMutation = useMutation({

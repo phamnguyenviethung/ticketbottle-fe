@@ -1,9 +1,9 @@
-import AppInput from '@/components/AppInput';
 import { Box, Button, Center } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import useLogin from '../hooks/useLogin';
+import AppInput from '@/shared/components/AppInput';
 
 export interface LoginFormValues {
   email: string;

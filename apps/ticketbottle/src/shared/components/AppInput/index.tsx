@@ -1,8 +1,8 @@
 import { Input } from '@chakra-ui/react';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { Field } from '@/components/ui/field';
-import { PasswordInput } from '@/components/ui/password-input';
+import { PasswordInput } from '../ui/password-input';
+import { Field } from '../ui/field';
 
 interface AppInputProps {
   placeholder: string;
