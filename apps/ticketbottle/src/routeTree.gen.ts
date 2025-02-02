@@ -8,13 +8,20 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as LayoutMainLayoutImport } from './routes/_layout/_main-layout'
 import { Route as LayoutAuthLayoutImport } from './routes/_layout/_auth-layout'
-import { Route as LayoutMainLayoutIndexImport } from './routes/_layout/_main-layout/index'
 import { Route as LayoutAuthLayoutAuthLoginImport } from './routes/_layout/_auth-layout/auth/login'
+
+// Create Virtual Routes
+
+const LayoutMainLayoutIndexLazyImport = createFileRoute(
+  '/_layout/_main-layout/',
+)()
 
 // Create/Update Routes
 
@@ -28,11 +35,13 @@ const LayoutAuthLayoutRoute = LayoutAuthLayoutImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const LayoutMainLayoutIndexRoute = LayoutMainLayoutIndexImport.update({
+const LayoutMainLayoutIndexLazyRoute = LayoutMainLayoutIndexLazyImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LayoutMainLayoutRoute,
-} as any)
+} as any).lazy(() =>
+  import('./routes/_layout/_main-layout/index.lazy').then((d) => d.Route),
+)
 
 const LayoutAuthLayoutAuthLoginRoute = LayoutAuthLayoutAuthLoginImport.update({
   id: '/auth/login',
@@ -62,7 +71,7 @@ declare module '@tanstack/react-router' {
       id: '/_layout/_main-layout/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof LayoutMainLayoutIndexImport
+      preLoaderRoute: typeof LayoutMainLayoutIndexLazyImport
       parentRoute: typeof LayoutMainLayoutImport
     }
     '/_layout/_auth-layout/auth/login': {
@@ -89,11 +98,11 @@ const LayoutAuthLayoutRouteWithChildren =
   LayoutAuthLayoutRoute._addFileChildren(LayoutAuthLayoutRouteChildren)
 
 interface LayoutMainLayoutRouteChildren {
-  LayoutMainLayoutIndexRoute: typeof LayoutMainLayoutIndexRoute
+  LayoutMainLayoutIndexLazyRoute: typeof LayoutMainLayoutIndexLazyRoute
 }
 
 const LayoutMainLayoutRouteChildren: LayoutMainLayoutRouteChildren = {
-  LayoutMainLayoutIndexRoute: LayoutMainLayoutIndexRoute,
+  LayoutMainLayoutIndexLazyRoute: LayoutMainLayoutIndexLazyRoute,
 }
 
 const LayoutMainLayoutRouteWithChildren =
@@ -101,13 +110,13 @@ const LayoutMainLayoutRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutMainLayoutRouteWithChildren
-  '/': typeof LayoutMainLayoutIndexRoute
+  '/': typeof LayoutMainLayoutIndexLazyRoute
   '/auth/login': typeof LayoutAuthLayoutAuthLoginRoute
 }
 
 export interface FileRoutesByTo {
   '': typeof LayoutAuthLayoutRouteWithChildren
-  '/': typeof LayoutMainLayoutIndexRoute
+  '/': typeof LayoutMainLayoutIndexLazyRoute
   '/auth/login': typeof LayoutAuthLayoutAuthLoginRoute
 }
 
@@ -115,7 +124,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_layout/_auth-layout': typeof LayoutAuthLayoutRouteWithChildren
   '/_layout/_main-layout': typeof LayoutMainLayoutRouteWithChildren
-  '/_layout/_main-layout/': typeof LayoutMainLayoutIndexRoute
+  '/_layout/_main-layout/': typeof LayoutMainLayoutIndexLazyRoute
   '/_layout/_auth-layout/auth/login': typeof LayoutAuthLayoutAuthLoginRoute
 }
 
@@ -170,7 +179,7 @@ export const routeTree = rootRoute
       ]
     },
     "/_layout/_main-layout/": {
-      "filePath": "_layout/_main-layout/index.tsx",
+      "filePath": "_layout/_main-layout/index.lazy.tsx",
       "parent": "/_layout/_main-layout"
     },
     "/_layout/_auth-layout/auth/login": {
