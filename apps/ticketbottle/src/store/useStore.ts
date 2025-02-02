@@ -1,37 +1,12 @@
-import { TokenData } from '@/features/Auth/interface/token.interface';
-import { User } from '@/features/Auth/interface/user.interface';
-import {
-  getTokenFromLocalStorage,
-  getUserInfoFromLocalStorage,
-} from '@/utils/authUtil';
+import { AuthSlice, createAuthSlice } from '@/features/Auth/authSlice';
 import { create, StateCreator } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-interface AuthSlice {
-  token: TokenData | null;
-  user: User | null;
-  setToken: (token: TokenData) => void;
-  setUser: (user: User) => void;
-}
-
 type AppStore = AuthSlice;
 
-export const createAuthSlice: StateCreator<
-  AppStore,
-  [['zustand/devtools', never]],
-  [],
-  AuthSlice
-> = (set) => {
-  const token = getTokenFromLocalStorage();
-  const user = getUserInfoFromLocalStorage();
-  return {
-    token,
-    user,
-    setToken: (token: TokenData) => set({ token }),
-
-    setUser: (user: User) => set({ user }),
-  };
-};
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SliceInterface<T>
+  extends StateCreator<AppStore, [['zustand/devtools', never]], [], T> {}
 
 const useAppStore = create<AppStore>()(
   devtools((...a) => ({

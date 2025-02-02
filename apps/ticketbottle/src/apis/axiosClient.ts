@@ -1,5 +1,10 @@
-import { getTokenFromLocalStorage } from '@/utils/authUtil';
-import axios, { AxiosInstance } from 'axios';
+import useAppStore from '@/store/useStore';
+import {
+  clearAuthLocalStorage,
+  getTokenFromLocalStorage,
+} from '@/utils/authUtil';
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+import authAPI from './auth.api';
 
 export interface ApiResponse<T> {
   data: T;
@@ -29,13 +34,29 @@ axiosClient.interceptors.request.use(
 );
 
 axiosClient.interceptors.response.use(
-  function (response) {
+  async function (response: AxiosResponse) {
+    if (response.status === 401) {
+      const token = useAppStore.getState().token;
+      const refreshToken = token?.refreshToken;
+      if (refreshToken) {
+        try {
+          const res = await authAPI.refreshToken(refreshToken);
+          useAppStore
+            .getState()
+            .setToken({ accessToken: res.data.accessToken, refreshToken });
+        } catch (refreshTokenError) {
+          useAppStore.getState().logout();
+          return Promise.reject(refreshTokenError);
+        }
+      }
+    }
     if (response && response.data) {
       return response.data;
     }
     return response;
   },
-  function (error) {
+  function (error: AxiosError) {
+    console.error(error);
     return Promise.reject(error);
   }
 );

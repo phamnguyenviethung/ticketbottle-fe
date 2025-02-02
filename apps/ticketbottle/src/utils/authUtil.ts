@@ -25,3 +25,8 @@ export function getUserInfoFromLocalStorage(): User | null {
 export function saveUserInfoToLocalStorage(user: User): void {
   localStorage.setItem(USER_KEY, JSON.stringify(user));
 }
+
+export function clearAuthLocalStorage(): void {
+  localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(USER_KEY);
+}

@@ -14,6 +14,13 @@ const authAPI = {
   getMe: async () => {
     return await axiosClient.post('/auth/me');
   },
+  refreshToken: async (
+    refreshToken: string
+  ): Promise<ApiResponse<Pick<TokenData, 'accessToken'>>> => {
+    return await axiosClient.post('/auth/refresh-token', {
+      refreshToken,
+    });
+  },
 };
 
 export default authAPI;
