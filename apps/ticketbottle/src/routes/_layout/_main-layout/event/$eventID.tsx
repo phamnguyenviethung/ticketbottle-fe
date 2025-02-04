@@ -36,7 +36,7 @@ function RouteComponent() {
     placeOrderMutaion.mutate({
       paymentGateway: PaymentGateway.ZALOPAY,
       eventId: eventID,
-      returnUrl: window.location.origin + '/payment-callback',
+      returnUrl: window.location.origin + '/my-orders',
       orderDetails,
     });
   };

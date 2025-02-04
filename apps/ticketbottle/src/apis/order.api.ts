@@ -17,7 +17,7 @@ const orderAPI = {
   },
 
   getMyOrders: async () => {
-    return await axiosClient.get('/my-orders');
+    return await axiosClient.get('/order/my-orders');
   },
 
   getOrderDetail: async (orderCode: string) => {
