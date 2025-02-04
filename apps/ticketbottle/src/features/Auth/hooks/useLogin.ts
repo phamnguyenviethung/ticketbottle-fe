@@ -1,13 +1,9 @@
 import authAPI from '@/apis/auth.api';
-import { toaster } from '@/components/ui/toaster';
 import useAppStore from '@/store/useStore';
+import createApiErrorToast from '@/utils/createApiErrorToast';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 import { LoginFormValues } from '../components/LoginForm';
-import { ApiErrorResponse } from '@/apis/axiosClient';
-import { unknown } from 'zod';
-import { AxiosError } from 'axios';
-import createApiErrorToast from '@/utils/createApiErrorToast';
 
 interface UseLoginProps {
   redirect: string;
