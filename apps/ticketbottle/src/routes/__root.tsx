@@ -1,4 +1,4 @@
-import { Toaster } from '@/shared/components/ui/toaster';
+import { Toaster } from '@/components/ui/toaster';
 import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 

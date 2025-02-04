@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import useLogin from '../hooks/useLogin';
-import AppInput from '@/shared/components/AppInput';
+import AppInput from '@/components/AppInput';
 
 export interface LoginFormValues {
   email: string;
@@ -15,12 +15,12 @@ const loginSchema = z.object({
   password: z.string().nonempty("Password can't be empty"),
 });
 
-const LoginForm = () => {
+const LoginForm: React.FC<{ redirect: string }> = ({ redirect }) => {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
   });
 
-  const { handleLogin, loginMutation } = useLogin();
+  const { handleLogin, loginMutation } = useLogin({ redirect });
   const onSubmit = form.handleSubmit(handleLogin);
 
   return (

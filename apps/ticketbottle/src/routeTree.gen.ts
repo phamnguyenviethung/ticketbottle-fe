@@ -16,6 +16,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as LayoutMainLayoutImport } from './routes/_layout/_main-layout'
 import { Route as LayoutAuthLayoutImport } from './routes/_layout/_auth-layout'
 import { Route as LayoutMainLayoutEventEventIDImport } from './routes/_layout/_main-layout/event/$eventID'
+import { Route as LayoutMainLayoutordersMyOrdersImport } from './routes/_layout/_main-layout/(orders)/my-orders'
 import { Route as LayoutAuthLayoutAuthLoginImport } from './routes/_layout/_auth-layout/auth/login'
 
 // Create Virtual Routes
@@ -48,6 +49,13 @@ const LayoutMainLayoutEventEventIDRoute =
   LayoutMainLayoutEventEventIDImport.update({
     id: '/event/$eventID',
     path: '/event/$eventID',
+    getParentRoute: () => LayoutMainLayoutRoute,
+  } as any)
+
+const LayoutMainLayoutordersMyOrdersRoute =
+  LayoutMainLayoutordersMyOrdersImport.update({
+    id: '/(orders)/my-orders',
+    path: '/my-orders',
     getParentRoute: () => LayoutMainLayoutRoute,
   } as any)
 
@@ -89,6 +97,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutAuthLayoutAuthLoginImport
       parentRoute: typeof LayoutAuthLayoutImport
     }
+    '/_layout/_main-layout/(orders)/my-orders': {
+      id: '/_layout/_main-layout/(orders)/my-orders'
+      path: '/my-orders'
+      fullPath: '/my-orders'
+      preLoaderRoute: typeof LayoutMainLayoutordersMyOrdersImport
+      parentRoute: typeof LayoutMainLayoutImport
+    }
     '/_layout/_main-layout/event/$eventID': {
       id: '/_layout/_main-layout/event/$eventID'
       path: '/event/$eventID'
@@ -114,11 +129,13 @@ const LayoutAuthLayoutRouteWithChildren =
 
 interface LayoutMainLayoutRouteChildren {
   LayoutMainLayoutIndexLazyRoute: typeof LayoutMainLayoutIndexLazyRoute
+  LayoutMainLayoutordersMyOrdersRoute: typeof LayoutMainLayoutordersMyOrdersRoute
   LayoutMainLayoutEventEventIDRoute: typeof LayoutMainLayoutEventEventIDRoute
 }
 
 const LayoutMainLayoutRouteChildren: LayoutMainLayoutRouteChildren = {
   LayoutMainLayoutIndexLazyRoute: LayoutMainLayoutIndexLazyRoute,
+  LayoutMainLayoutordersMyOrdersRoute: LayoutMainLayoutordersMyOrdersRoute,
   LayoutMainLayoutEventEventIDRoute: LayoutMainLayoutEventEventIDRoute,
 }
 
@@ -129,6 +146,7 @@ export interface FileRoutesByFullPath {
   '': typeof LayoutMainLayoutRouteWithChildren
   '/': typeof LayoutMainLayoutIndexLazyRoute
   '/auth/login': typeof LayoutAuthLayoutAuthLoginRoute
+  '/my-orders': typeof LayoutMainLayoutordersMyOrdersRoute
   '/event/$eventID': typeof LayoutMainLayoutEventEventIDRoute
 }
 
@@ -136,6 +154,7 @@ export interface FileRoutesByTo {
   '': typeof LayoutAuthLayoutRouteWithChildren
   '/': typeof LayoutMainLayoutIndexLazyRoute
   '/auth/login': typeof LayoutAuthLayoutAuthLoginRoute
+  '/my-orders': typeof LayoutMainLayoutordersMyOrdersRoute
   '/event/$eventID': typeof LayoutMainLayoutEventEventIDRoute
 }
 
@@ -145,20 +164,22 @@ export interface FileRoutesById {
   '/_layout/_main-layout': typeof LayoutMainLayoutRouteWithChildren
   '/_layout/_main-layout/': typeof LayoutMainLayoutIndexLazyRoute
   '/_layout/_auth-layout/auth/login': typeof LayoutAuthLayoutAuthLoginRoute
+  '/_layout/_main-layout/(orders)/my-orders': typeof LayoutMainLayoutordersMyOrdersRoute
   '/_layout/_main-layout/event/$eventID': typeof LayoutMainLayoutEventEventIDRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/' | '/auth/login' | '/event/$eventID'
+  fullPaths: '' | '/' | '/auth/login' | '/my-orders' | '/event/$eventID'
   fileRoutesByTo: FileRoutesByTo
-  to: '' | '/' | '/auth/login' | '/event/$eventID'
+  to: '' | '/' | '/auth/login' | '/my-orders' | '/event/$eventID'
   id:
     | '__root__'
     | '/_layout/_auth-layout'
     | '/_layout/_main-layout'
     | '/_layout/_main-layout/'
     | '/_layout/_auth-layout/auth/login'
+    | '/_layout/_main-layout/(orders)/my-orders'
     | '/_layout/_main-layout/event/$eventID'
   fileRoutesById: FileRoutesById
 }
@@ -197,6 +218,7 @@ export const routeTree = rootRoute
       "filePath": "_layout/_main-layout.tsx",
       "children": [
         "/_layout/_main-layout/",
+        "/_layout/_main-layout/(orders)/my-orders",
         "/_layout/_main-layout/event/$eventID"
       ]
     },
@@ -207,6 +229,10 @@ export const routeTree = rootRoute
     "/_layout/_auth-layout/auth/login": {
       "filePath": "_layout/_auth-layout/auth/login.tsx",
       "parent": "/_layout/_auth-layout"
+    },
+    "/_layout/_main-layout/(orders)/my-orders": {
+      "filePath": "_layout/_main-layout/(orders)/my-orders.tsx",
+      "parent": "/_layout/_main-layout"
     },
     "/_layout/_main-layout/event/$eventID": {
       "filePath": "_layout/_main-layout/event/$eventID.tsx",

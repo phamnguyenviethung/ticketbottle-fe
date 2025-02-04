@@ -6,9 +6,10 @@ export const Route = createFileRoute('/_layout/_auth-layout/auth/login')({
 });
 
 function RouteComponent() {
+  const search: { redirect?: string } = Route.useSearch();
   return (
     <>
-      <LoginForm />
+      <LoginForm redirect={search.redirect ?? '/'} />
     </>
   );
 }

@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react';
 import logo from '@/assets/logo.svg';
 import useAppStore from '@/store/useStore';
+import { Link } from '@tanstack/react-router';
 const Header: React.FC = () => {
   const user = useAppStore((state) => state.user);
   const logout = useAppStore((state) => state.logout);
@@ -20,9 +21,11 @@ const Header: React.FC = () => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Box>
-          <Image src={logo} />
-        </Box>
+        <Link to="/">
+          <Box>
+            <Image src={logo} />
+          </Box>
+        </Link>
         <Box>search</Box>
         <Box>
           <Text>{`${user?.firstName} ${user?.lastName}`}</Text>

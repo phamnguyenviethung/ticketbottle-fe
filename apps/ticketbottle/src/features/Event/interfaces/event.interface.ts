@@ -1,5 +1,5 @@
 import { ApiResponse } from '@/apis/axiosClient';
-import { PagiantionData } from '@/shared/interfaces/pagination.interface';
+import { PagiantionData } from '@/interfaces/pagination.interface';
 
 export interface EventInfo {
   id: string;

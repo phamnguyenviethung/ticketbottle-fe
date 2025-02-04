@@ -4,9 +4,14 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-
 import { routeTree } from './routeTree.gen';
-import { Provider } from '@/shared/components/ui/provider';
+import { Provider } from '@/components/ui/provider';
+import '@fontsource/be-vietnam-pro/400.css';
+import '@fontsource/be-vietnam-pro/500.css';
+import '@fontsource/be-vietnam-pro/600.css';
+import '@fontsource/be-vietnam-pro/700.css';
+import '@fontsource/be-vietnam-pro/800.css';
+
 const router = createRouter({ routeTree });
 
 declare module '@tanstack/react-router' {
