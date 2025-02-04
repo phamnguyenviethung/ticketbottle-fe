@@ -4,6 +4,10 @@ import useAppStore from '@/store/useStore';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 import { LoginFormValues } from '../components/LoginForm';
+import { ApiErrorResponse } from '@/apis/axiosClient';
+import { unknown } from 'zod';
+import { AxiosError } from 'axios';
+import createApiErrorToast from '@/utils/createApiErrorToast';
 
 interface UseLoginProps {
   redirect: string;
@@ -23,12 +27,9 @@ const useLogin = ({ redirect }: UseLoginProps) => {
       localStorage.setItem('token', JSON.stringify(res.data));
       store.setToken(res.data);
       router.history.push(redirect);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.log(error);
-      toaster.create({
-        type: 'error',
-        title: error.message.toString(),
-      });
+      createApiErrorToast(error);
     }
   }
 
