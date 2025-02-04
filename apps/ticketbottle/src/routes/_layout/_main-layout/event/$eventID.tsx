@@ -5,8 +5,8 @@ import { PaymentGateway } from '@/features/Order/interfaces/order.interface';
 import { Box, Button, Text } from '@chakra-ui/react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
-import { useState } from 'react';
 import _ from 'lodash';
+import { useState } from 'react';
 export const Route = createFileRoute('/_layout/_main-layout/event/$eventID')({
   component: RouteComponent,
 });
@@ -36,7 +36,7 @@ function RouteComponent() {
     placeOrderMutaion.mutate({
       paymentGateway: PaymentGateway.ZALOPAY,
       eventId: eventID,
-      returnUrl: 'http://localhost:5544',
+      returnUrl: window.location.origin + '/payment-callback',
       orderDetails,
     });
   };
