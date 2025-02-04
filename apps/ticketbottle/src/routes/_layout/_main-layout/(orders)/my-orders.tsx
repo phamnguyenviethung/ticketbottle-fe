@@ -25,7 +25,7 @@ function RouteComponent() {
   console.log(data);
   return (
     <Box>
-      {data.data.map((i) => {
+      {data.data.map((i: { id: string }) => {
         return (
           <RouterLink to={`/order/$code`} params={{ code: i.id }} key={i.id}>
             <Text _hover={{ color: 'blue.500' }}>Đơn hàng {i.id}</Text>
