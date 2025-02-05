@@ -1,26 +1,17 @@
 import { Box, Icon } from '@chakra-ui/react';
 import React from 'react';
-import Slider from 'react-slick';
+import Slider, { CustomArrowProps } from 'react-slick';
 import { Event } from '../../interfaces/event.interface';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  nextArrow: <SampleNextArrow />,
-  prevArrow: <SamplePrevArrow />,
-};
 
 interface BigEventCoverSliderProps {
   data: Event[] | [];
 }
 
-function SampleNextArrow(props) {
+const SampleNextArrow: React.FC<CustomArrowProps> = (
+  props: CustomArrowProps
+) => {
   const { className, style, onClick } = props;
-  console.log(style);
   return (
     <Icon
       className={className}
@@ -49,9 +40,9 @@ function SampleNextArrow(props) {
       <ChevronRight />
     </Icon>
   );
-}
+};
 
-function SamplePrevArrow(props) {
+const SamplePrevArrow: React.FC<CustomArrowProps> = (props) => {
   const { className, style, onClick } = props;
   return (
     <Icon
@@ -82,8 +73,16 @@ function SamplePrevArrow(props) {
       <ChevronLeft />
     </Icon>
   );
-}
-
+};
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  nextArrow: <SampleNextArrow />,
+  prevArrow: <SamplePrevArrow />,
+};
 const BigEventCoverSlider: React.FC<BigEventCoverSliderProps> = ({ data }) => {
   return (
     <Box maxW="full">
