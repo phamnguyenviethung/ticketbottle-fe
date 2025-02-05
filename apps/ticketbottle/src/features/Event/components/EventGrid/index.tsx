@@ -43,6 +43,7 @@ const EventGrid: React.FC<EventGridProps> = ({ data }) => {
                 <Image
                   src={event.eventInfo.thumbnail}
                   alt={event.eventInfo.name}
+                  borderRadius="lg"
                 />
               </Center>
               <Stack flex="1" mt={4}>
@@ -62,7 +63,14 @@ const EventGrid: React.FC<EventGridProps> = ({ data }) => {
                   </Text>
                 </Stack>
                 <Flex alignItems="flex-end" flex="1">
-                  <Heading as="h1" fontWeight={600} fontSize="lg">
+                  <Heading
+                    as="h1"
+                    fontWeight={600}
+                    fontSize={{
+                      base: 'md',
+                      md: 'lg',
+                    }}
+                  >
                     {info.name}
                   </Heading>
                 </Flex>

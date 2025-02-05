@@ -15,7 +15,10 @@ const MainLayout: React.FC<Props> = ({ children }) => {
       <Box h={`${HEADER_HEIGHT}px`}>
         <Header />
       </Box>
-      <Container minH={`calc(100vh - ${FOOTER_HEIGHT + HEADER_HEIGHT}px)`}>
+      <Container
+        py={4}
+        minH={`calc(100vh - ${FOOTER_HEIGHT + HEADER_HEIGHT}px)`}
+      >
         {children}
       </Container>
       <Box h={`${FOOTER_HEIGHT}px`}>

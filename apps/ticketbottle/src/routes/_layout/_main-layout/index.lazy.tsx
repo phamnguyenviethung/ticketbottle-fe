@@ -1,6 +1,7 @@
 import EventGrid from '@/features/Event/components/EventGrid';
+import BigEventCoverSlider from '@/features/Event/components/EventSlider/BigEventCoverSlider';
 import useEventList from '@/features/Event/hooks/useEventList';
-import { Box } from '@chakra-ui/react';
+import { Box, Heading, Stack } from '@chakra-ui/react';
 import { createLazyFileRoute } from '@tanstack/react-router';
 
 export const Route = createLazyFileRoute('/_layout/_main-layout/')({
@@ -12,7 +13,17 @@ function Index() {
   if (query.isLoading) {
     return <Box>Loading...</Box>;
   }
+
+  if (!query.data) {
+    throw new Error('Data is not available');
+  }
   return (
-    <Box w="full">{query.data && <EventGrid data={query.data.data} />}</Box>
+    <Stack gap={16} w="full">
+      <BigEventCoverSlider data={query.data.data} />
+      <Box>
+        <Heading as="h6">Sự kiện</Heading>
+        <EventGrid data={query.data.data} />
+      </Box>
+    </Stack>
   );
 }
