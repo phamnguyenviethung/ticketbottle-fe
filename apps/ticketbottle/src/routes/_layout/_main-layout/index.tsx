@@ -12,10 +12,6 @@ export const Route = createFileRoute('/_layout/_main-layout/')({
 function Index() {
   const { query } = useEventList({ apiParams: { perPage: 10 } });
 
-  if (!query.data && !query.isLoading) {
-    throw new Error('Data is not available');
-  }
-
   return (
     <Stack gap={16} w="full">
       <BigEventCoverSlider
