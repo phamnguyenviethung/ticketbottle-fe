@@ -1,14 +1,12 @@
 import orderAPI from '@/apis/order.api';
-import authCheckBeforeLoad from '@/features/Auth/authCheckBeforeLoad';
 import useAppStore from '@/store/useStore';
 import { Box, Text } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute, Link as RouterLink } from '@tanstack/react-router';
 export const Route = createFileRoute(
-  '/_layout/_main-layout/(orders)/my-orders'
+  '/_layout/_main-layout/_auth/(orders)/my-orders'
 )({
   component: RouteComponent,
-  beforeLoad: authCheckBeforeLoad,
 });
 
 function RouteComponent() {

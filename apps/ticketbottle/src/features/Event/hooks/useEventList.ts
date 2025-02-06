@@ -8,7 +8,7 @@ interface UseEventListOptions {
 const useEventList = (opt: UseEventListOptions) => {
   const eventListQuery = useQuery({
     queryKey: ['eventList'],
-    queryFn: () => eventAPI.getEvents({ includeInfo: true, ...opt.apiParams }),
+    queryFn: () => eventAPI.getEvents(opt.apiParams),
     select: (res) => res.data,
   });
 

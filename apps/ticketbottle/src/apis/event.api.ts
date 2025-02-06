@@ -8,7 +8,6 @@ import { TicketClass } from '@/features/Event/interfaces/ticket.interface';
 export interface GetEventsOptions {
   page?: number;
   perPage?: number;
-  includeInfo?: true;
 }
 
 const eventAPI = {

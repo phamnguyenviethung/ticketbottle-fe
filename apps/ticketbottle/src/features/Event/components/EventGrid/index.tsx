@@ -1,23 +1,54 @@
+import { Skeleton, SkeletonText } from '@/components/ui/skeleton';
 import {
   Box,
   Center,
+  Flex,
+  Heading,
   Image,
   SimpleGrid,
   Stack,
-  Text,
   Tag,
-  Heading,
-  Flex,
+  Text,
 } from '@chakra-ui/react';
-import { Event, EventInfo } from '../../interfaces/event.interface';
 import { Link } from '@tanstack/react-router';
 import dayjs from 'dayjs';
+import { Event, EventInfo } from '../../interfaces/event.interface';
 
 interface EventGridProps {
   data: Event[] | [];
+  isLoading?: boolean;
 }
 
-const EventGrid: React.FC<EventGridProps> = ({ data }) => {
+const LoadingEventGrid: React.FC = () => {
+  return (
+    <SimpleGrid
+      columns={{
+        base: 1,
+        md: 2,
+        lg: 4,
+      }}
+      gap={4}
+      w="full"
+      my={4}
+    >
+      {[...Array(8)].map(() => {
+        return (
+          <Stack gap="4">
+            <Skeleton height="200px" />
+            <SkeletonText noOfLines={2} />
+            <SkeletonText noOfLines={1} mt={6} w="full" />
+          </Stack>
+        );
+      })}
+    </SimpleGrid>
+  );
+};
+
+const EventGrid: React.FC<EventGridProps> = ({ data, isLoading }) => {
+  if (isLoading) {
+    return <LoadingEventGrid />;
+  }
+
   return (
     <SimpleGrid
       my={2}
@@ -30,8 +61,10 @@ const EventGrid: React.FC<EventGridProps> = ({ data }) => {
       gap={4}
     >
       {data.map((event: Event) => {
-        const date = dayjs(event.eventInfo.startDate);
         const info: EventInfo = event.eventInfo;
+        if (!info) return null;
+        const date = dayjs(info.startDate);
+
         return (
           <Link
             key={event.id}
@@ -44,6 +77,14 @@ const EventGrid: React.FC<EventGridProps> = ({ data }) => {
                   src={event.eventInfo.thumbnail}
                   alt={event.eventInfo.name}
                   borderRadius="lg"
+                  transition={'transform 0.05s linear'}
+                  _hover={{
+                    transform: {
+                      base: 'scale(1)',
+                      lg: 'scale(1.1)',
+                    },
+                    transition: 'transform 0.05s linear',
+                  }}
                 />
               </Center>
               <Stack flex="1" mt={4}>

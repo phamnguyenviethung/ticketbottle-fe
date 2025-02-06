@@ -3,9 +3,11 @@ import React from 'react';
 import Slider, { CustomArrowProps } from 'react-slick';
 import { Event } from '../../interfaces/event.interface';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface BigEventCoverSliderProps {
   data: Event[] | [];
+  isLoading?: boolean;
 }
 
 const SampleNextArrow: React.FC<CustomArrowProps> = (
@@ -83,25 +85,34 @@ const settings = {
   nextArrow: <SampleNextArrow />,
   prevArrow: <SamplePrevArrow />,
 };
-const BigEventCoverSlider: React.FC<BigEventCoverSliderProps> = ({ data }) => {
+const BigEventCoverSlider: React.FC<BigEventCoverSliderProps> = ({
+  data,
+  isLoading,
+}) => {
+  if (isLoading) {
+    return <Skeleton height="400px" />;
+  }
+
   return (
     <Box maxW="full">
       <Slider {...settings}>
-        {data.map((event: Event) => {
-          return (
-            <Box
-              key={event.id}
-              w="full"
-              h={{
-                base: '200px',
-                md: '400px',
-              }}
-              backgroundImage={`url(${event.eventInfo.thumbnail})`}
-              backgroundSize="contain"
-              backgroundPosition="center"
-            />
-          );
-        })}
+        {data
+          .filter((e: Event) => e.eventInfo)
+          .map((event: Event) => {
+            return (
+              <Box
+                borderRadius="lg"
+                key={event.id}
+                w="full"
+                h={{
+                  base: '200px',
+                  md: '400px',
+                }}
+                backgroundImage={`url(${event.eventInfo.thumbnail})`}
+                backgroundSize="contain"
+              />
+            );
+          })}
       </Slider>
     </Box>
   );
