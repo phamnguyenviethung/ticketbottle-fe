@@ -7,7 +7,7 @@ interface Props {
 }
 
 const HEADER_HEIGHT = 85;
-const FOOTER_HEIGHT = 100;
+const FOOTER_HEIGHT = 150;
 
 const MainLayout: React.FC<Props> = ({ children }) => {
   return (

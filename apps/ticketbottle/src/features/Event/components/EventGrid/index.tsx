@@ -31,9 +31,9 @@ const LoadingEventGrid: React.FC = () => {
       w="full"
       my={4}
     >
-      {[...Array(8)].map(() => {
+      {[...Array(8)].map((i: number) => {
         return (
-          <Stack gap="4">
+          <Stack gap="4" key={i}>
             <Skeleton height="200px" />
             <SkeletonText noOfLines={2} />
             <SkeletonText noOfLines={1} mt={6} w="full" />
@@ -115,7 +115,7 @@ const EventGrid: React.FC<EventGridProps> = ({ data, isLoading }) => {
                   </Text>
                 </Stack>
                 <Flex alignItems="flex-end" flex="1">
-                  <Heading as="h1" fontWeight={600} fontSize="lg">
+                  <Heading as="h1" fontWeight={600} fontSize="md">
                     {info.name}
                   </Heading>
                 </Flex>
