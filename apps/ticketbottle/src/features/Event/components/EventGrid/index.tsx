@@ -58,7 +58,7 @@ const EventGrid: React.FC<EventGridProps> = ({ data, isLoading }) => {
         lg: 4,
       }}
       w="full"
-      gap={4}
+      gap={8}
     >
       {data.map((event: Event) => {
         const info: EventInfo = event.eventInfo;
@@ -71,7 +71,18 @@ const EventGrid: React.FC<EventGridProps> = ({ data, isLoading }) => {
             to="/event/$eventID"
             params={{ eventID: event.id }}
           >
-            <Stack minH="350px" w="full" p={2}>
+            <Stack
+              minH="350px"
+              w="full"
+              gap="2"
+              border={{
+                base: '1px solid',
+                lg: 'none',
+              }}
+              borderColor="gray.200"
+              borderRadius="lg"
+              borderTop="none"
+            >
               <Center w="full">
                 <Image
                   src={event.eventInfo.thumbnail}
@@ -87,7 +98,7 @@ const EventGrid: React.FC<EventGridProps> = ({ data, isLoading }) => {
                   }}
                 />
               </Center>
-              <Stack flex="1" mt={4}>
+              <Stack flex="1" gap="2" mt={2} p={2}>
                 <Stack gap="2">
                   <Box>
                     <Tag.Root
@@ -104,14 +115,7 @@ const EventGrid: React.FC<EventGridProps> = ({ data, isLoading }) => {
                   </Text>
                 </Stack>
                 <Flex alignItems="flex-end" flex="1">
-                  <Heading
-                    as="h1"
-                    fontWeight={600}
-                    fontSize={{
-                      base: 'md',
-                      md: 'lg',
-                    }}
-                  >
+                  <Heading as="h1" fontWeight={600} fontSize="lg">
                     {info.name}
                   </Heading>
                 </Flex>
