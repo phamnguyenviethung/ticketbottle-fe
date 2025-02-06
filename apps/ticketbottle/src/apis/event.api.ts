@@ -1,5 +1,6 @@
 import {
   Event,
+  EventListByCategory,
   EventListResponse,
 } from '@/features/Event/interfaces/event.interface';
 import axiosClient, { ApiResponse } from './axiosClient';
@@ -16,6 +17,12 @@ const eventAPI = {
   },
   getEventByID: async (id: string): Promise<ApiResponse<Event>> => {
     return await axiosClient.get(`/event/${id}`);
+  },
+
+  getEventsListByCategory: async (): Promise<
+    ApiResponse<EventListByCategory[]>
+  > => {
+    return await axiosClient.get(`/event/categories`);
   },
 
   getTicketClassByEventID: async (

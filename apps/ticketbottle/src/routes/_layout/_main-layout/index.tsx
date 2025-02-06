@@ -1,7 +1,8 @@
-import EventGrid from '@/features/Event/components/EventGrid';
+import EventGridByCate from '@/features/Event/components/EventGrid/EventGridByCate';
 import BigEventCoverSlider from '@/features/Event/components/EventSlider/BigEventCoverSlider';
 import useEventList from '@/features/Event/hooks/useEventList';
-import { Box, Heading, Show, Stack } from '@chakra-ui/react';
+import useEventListByCategory from '@/features/Event/hooks/useEventListByCategory';
+import { Box, Stack } from '@chakra-ui/react';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_layout/_main-layout/')({
@@ -11,6 +12,7 @@ export const Route = createFileRoute('/_layout/_main-layout/')({
 
 function Index() {
   const { query } = useEventList({ apiParams: { perPage: 10 } });
+  const { query: newQuery } = useEventListByCategory();
 
   return (
     <Stack gap={16} w="full">
@@ -18,15 +20,10 @@ function Index() {
         data={query.isSuccess ? query.data.data : []}
         isLoading={query.isLoading}
       />
-      <Box>
-        <Show when={query.isSuccess}>
-          <Heading as="h6">Sự kiện</Heading>
-        </Show>
-        <EventGrid
-          data={query.isSuccess ? query.data.data : []}
-          isLoading={query.isLoading}
-        />
-      </Box>
+      <EventGridByCate
+        data={newQuery.isSuccess ? newQuery.data : []}
+        isLoading={newQuery.isLoading}
+      />
     </Stack>
   );
 }

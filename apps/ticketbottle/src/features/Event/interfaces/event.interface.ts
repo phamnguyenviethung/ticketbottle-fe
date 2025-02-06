@@ -18,4 +18,9 @@ export interface Event {
   eventInfo: EventInfo;
 }
 
+export interface EventListByCategory {
+  categoryName: string;
+  events: Event[] | [];
+}
+
 export type EventListResponse = ApiResponse<PagiantionData<Event>>;

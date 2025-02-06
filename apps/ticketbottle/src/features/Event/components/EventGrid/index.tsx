@@ -1,4 +1,3 @@
-import { Skeleton, SkeletonText } from '@/components/ui/skeleton';
 import {
   Box,
   Center,
@@ -13,40 +12,16 @@ import {
 import { Link } from '@tanstack/react-router';
 import dayjs from 'dayjs';
 import { Event, EventInfo } from '../../interfaces/event.interface';
+import EventGridLoading from './EventGridLoading';
 
 interface EventGridProps {
   data: Event[] | [];
   isLoading?: boolean;
 }
 
-const LoadingEventGrid: React.FC = () => {
-  return (
-    <SimpleGrid
-      columns={{
-        base: 1,
-        md: 2,
-        lg: 4,
-      }}
-      gap={4}
-      w="full"
-      my={4}
-    >
-      {[...Array(8)].map((i: number) => {
-        return (
-          <Stack gap="4" key={i}>
-            <Skeleton height="200px" />
-            <SkeletonText noOfLines={2} />
-            <SkeletonText noOfLines={1} mt={6} w="full" />
-          </Stack>
-        );
-      })}
-    </SimpleGrid>
-  );
-};
-
 const EventGrid: React.FC<EventGridProps> = ({ data, isLoading }) => {
   if (isLoading) {
-    return <LoadingEventGrid />;
+    return <EventGridLoading />;
   }
 
   return (
