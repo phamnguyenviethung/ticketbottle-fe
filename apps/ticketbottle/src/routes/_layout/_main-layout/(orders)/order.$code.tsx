@@ -20,7 +20,6 @@ function RouteComponent() {
   });
 
   if (isLoading) return <div>Loading...</div>;
-  console.log(data);
   return (
     <Box>
       <DataList.Root>

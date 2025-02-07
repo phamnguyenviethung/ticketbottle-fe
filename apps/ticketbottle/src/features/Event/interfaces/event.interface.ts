@@ -4,7 +4,7 @@ import { PagiantionData } from '@/interfaces/pagination.interface';
 export interface EventInfo {
   id: string;
   name: string;
-  locaiton: string;
+  location: string;
   thumbnail: string;
   startDate: Date;
   eventId: string;
