@@ -8,6 +8,7 @@ export interface EventInfo {
   thumbnail: string;
   startDate: Date;
   eventId: string;
+  description: string;
 }
 
 export interface Event {

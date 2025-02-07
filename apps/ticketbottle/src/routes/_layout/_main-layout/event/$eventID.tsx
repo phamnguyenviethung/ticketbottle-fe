@@ -2,12 +2,22 @@ import eventAPI from '@/apis/event.api';
 import orderAPI, { PlaceOrderRequestBody } from '@/apis/order.api';
 import { TicketClass } from '@/features/Event/interfaces/ticket.interface';
 import { PaymentGateway } from '@/features/Order/interfaces/order.interface';
-import { Box, Button, Heading, Image, Stack, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  HStack,
+  Image,
+  Stack,
+  Text,
+} from '@chakra-ui/react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import _ from 'lodash';
 import { useState } from 'react';
 import dayjs from 'dayjs';
+import { CalendarDays, MapPin } from 'lucide-react';
 export const Route = createFileRoute('/_layout/_main-layout/event/$eventID')({
   component: RouteComponent,
 });
@@ -85,27 +95,55 @@ function RouteComponent() {
           w="full"
           flex="1"
           bgColor="white"
-          p={[8, 12, 14]}
+          p={[4, 8]}
           borderRadius="lg"
           justifyContent="space-between"
         >
-          <Stack>
+          <Stack gap="6" minH="200px">
             <Heading
               as="h2"
-              fontSize="xl"
+              fontSize="2xl"
               letterSpacing="0.5px"
               fontWeight={700}
             >
               {event.data?.eventInfo.name}
             </Heading>
-            <Stack>
-              <Text fontSize="lg" fontWeight="500">
-                {dayjs(event.data?.eventInfo.startDate).format('DD/MM/YYYY')}
+            <HStack gap="4">
+              <CalendarDays />
+              <Stack gap="0">
+                <Text
+                  fontSize={{
+                    base: 'md',
+                    md: 'lg',
+                  }}
+                  fontWeight="500"
+                >
+                  {dayjs(event.data?.eventInfo.startDate).format('DD/MM/YYYY')}
+                </Text>
+                <Text
+                  fontSize={{
+                    base: 'sm',
+                    md: 'md',
+                  }}
+                  fontWeight="500"
+                  color="gray.500"
+                >
+                  Từ {dayjs(event.data?.eventInfo.startDate).format('HH:mm')}
+                </Text>
+              </Stack>
+            </HStack>
+            <HStack gap="4">
+              <MapPin />
+              <Text
+                fontSize={{
+                  base: 'md',
+                  md: 'lg',
+                }}
+                fontWeight="500"
+              >
+                {event.data?.eventInfo.location}
               </Text>
-            </Stack>
-            <Text fontSize="lg" fontWeight="500">
-              {event.data?.eventInfo.location}
-            </Text>
+            </HStack>
           </Stack>
           <Box>
             <Button colorPalette="green" w="full" size="2xl">
@@ -114,44 +152,20 @@ function RouteComponent() {
           </Box>
         </Stack>
       </Stack>
-      EventID: {event.data?.id}
-      {ticketClass.data?.map((ticket: TicketClass) => {
-        return (
-          <Box key={ticket.id}>
-            <Text>
-              {ticket.name} - {ticket.price} triệu
-            </Text>
-            <Button
-              onClick={() => {
-                const q = selectedTicketClass[ticket.id];
-
-                const newQ = q ? q + 1 : 1;
-
-                setSelectedTicketClass({
-                  ...selectedTicketClass,
-                  [ticket.id]: newQ,
-                });
-              }}
-            >
-              Chọn
-            </Button>
-          </Box>
-        );
-      })}
-      <Button
-        disabled={_.isEmpty(selectedTicketClass)}
-        onClick={handleClickBuy}
-      >
-        Mua đê
-      </Button>
-      {Object.keys(selectedTicketClass).map((c) => {
-        return (
-          <Box key={c}>
-            <Text>{ticketClass.data?.find((t) => t.id === c)?.name}</Text>
-            <Text>{selectedTicketClass[c]}</Text>
-          </Box>
-        );
-      })}
+      <Container my={4} minH="200px">
+        <Box>
+          <Heading
+            as="h6"
+            fontSize={{
+              base: 'xl',
+              md: '2xl',
+            }}
+          >
+            Giới thiệu
+          </Heading>
+          <Box>{event.data?.eventInfo.description}</Box>
+        </Box>
+      </Container>
     </Box>
   );
 }

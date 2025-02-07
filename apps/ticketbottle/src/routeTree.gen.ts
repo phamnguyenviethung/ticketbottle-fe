@@ -18,6 +18,7 @@ import { Route as LayoutMainLayoutAuthImport } from './routes/_layout/_main-layo
 import { Route as LayoutMainLayoutEventEventIDImport } from './routes/_layout/_main-layout/event/$eventID'
 import { Route as LayoutMainLayoutuserProfileImport } from './routes/_layout/_main-layout/(user)/profile'
 import { Route as LayoutAuthLayoutAuthLoginImport } from './routes/_layout/_auth-layout/auth/login'
+import { Route as LayoutMainLayoutEventCheckoutEventIDImport } from './routes/_layout/_main-layout/event/checkout.$eventID'
 import { Route as LayoutMainLayoutAuthordersMyOrdersImport } from './routes/_layout/_main-layout/_auth/(orders)/my-orders'
 import { Route as LayoutMainLayoutordersOrderCodeImport } from './routes/_layout/_main-layout/(orders)/order.$code'
 
@@ -63,6 +64,13 @@ const LayoutAuthLayoutAuthLoginRoute = LayoutAuthLayoutAuthLoginImport.update({
   path: '/auth/login',
   getParentRoute: () => LayoutAuthLayoutRoute,
 } as any)
+
+const LayoutMainLayoutEventCheckoutEventIDRoute =
+  LayoutMainLayoutEventCheckoutEventIDImport.update({
+    id: '/event/checkout/$eventID',
+    path: '/event/checkout/$eventID',
+    getParentRoute: () => LayoutMainLayoutRoute,
+  } as any)
 
 const LayoutMainLayoutAuthordersMyOrdersRoute =
   LayoutMainLayoutAuthordersMyOrdersImport.update({
@@ -145,6 +153,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutMainLayoutAuthordersMyOrdersImport
       parentRoute: typeof LayoutMainLayoutAuthImport
     }
+    '/_layout/_main-layout/event/checkout/$eventID': {
+      id: '/_layout/_main-layout/event/checkout/$eventID'
+      path: '/event/checkout/$eventID'
+      fullPath: '/event/checkout/$eventID'
+      preLoaderRoute: typeof LayoutMainLayoutEventCheckoutEventIDImport
+      parentRoute: typeof LayoutMainLayoutImport
+    }
   }
 }
 
@@ -179,6 +194,7 @@ interface LayoutMainLayoutRouteChildren {
   LayoutMainLayoutuserProfileRoute: typeof LayoutMainLayoutuserProfileRoute
   LayoutMainLayoutEventEventIDRoute: typeof LayoutMainLayoutEventEventIDRoute
   LayoutMainLayoutordersOrderCodeRoute: typeof LayoutMainLayoutordersOrderCodeRoute
+  LayoutMainLayoutEventCheckoutEventIDRoute: typeof LayoutMainLayoutEventCheckoutEventIDRoute
 }
 
 const LayoutMainLayoutRouteChildren: LayoutMainLayoutRouteChildren = {
@@ -187,6 +203,8 @@ const LayoutMainLayoutRouteChildren: LayoutMainLayoutRouteChildren = {
   LayoutMainLayoutuserProfileRoute: LayoutMainLayoutuserProfileRoute,
   LayoutMainLayoutEventEventIDRoute: LayoutMainLayoutEventEventIDRoute,
   LayoutMainLayoutordersOrderCodeRoute: LayoutMainLayoutordersOrderCodeRoute,
+  LayoutMainLayoutEventCheckoutEventIDRoute:
+    LayoutMainLayoutEventCheckoutEventIDRoute,
 }
 
 const LayoutMainLayoutRouteWithChildren =
@@ -200,6 +218,7 @@ export interface FileRoutesByFullPath {
   '/event/$eventID': typeof LayoutMainLayoutEventEventIDRoute
   '/order/$code': typeof LayoutMainLayoutordersOrderCodeRoute
   '/my-orders': typeof LayoutMainLayoutAuthordersMyOrdersRoute
+  '/event/checkout/$eventID': typeof LayoutMainLayoutEventCheckoutEventIDRoute
 }
 
 export interface FileRoutesByTo {
@@ -210,6 +229,7 @@ export interface FileRoutesByTo {
   '/event/$eventID': typeof LayoutMainLayoutEventEventIDRoute
   '/order/$code': typeof LayoutMainLayoutordersOrderCodeRoute
   '/my-orders': typeof LayoutMainLayoutAuthordersMyOrdersRoute
+  '/event/checkout/$eventID': typeof LayoutMainLayoutEventCheckoutEventIDRoute
 }
 
 export interface FileRoutesById {
@@ -223,6 +243,7 @@ export interface FileRoutesById {
   '/_layout/_main-layout/event/$eventID': typeof LayoutMainLayoutEventEventIDRoute
   '/_layout/_main-layout/(orders)/order/$code': typeof LayoutMainLayoutordersOrderCodeRoute
   '/_layout/_main-layout/_auth/(orders)/my-orders': typeof LayoutMainLayoutAuthordersMyOrdersRoute
+  '/_layout/_main-layout/event/checkout/$eventID': typeof LayoutMainLayoutEventCheckoutEventIDRoute
 }
 
 export interface FileRouteTypes {
@@ -235,6 +256,7 @@ export interface FileRouteTypes {
     | '/event/$eventID'
     | '/order/$code'
     | '/my-orders'
+    | '/event/checkout/$eventID'
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
@@ -244,6 +266,7 @@ export interface FileRouteTypes {
     | '/event/$eventID'
     | '/order/$code'
     | '/my-orders'
+    | '/event/checkout/$eventID'
   id:
     | '__root__'
     | '/_layout/_auth-layout'
@@ -255,6 +278,7 @@ export interface FileRouteTypes {
     | '/_layout/_main-layout/event/$eventID'
     | '/_layout/_main-layout/(orders)/order/$code'
     | '/_layout/_main-layout/_auth/(orders)/my-orders'
+    | '/_layout/_main-layout/event/checkout/$eventID'
   fileRoutesById: FileRoutesById
 }
 
@@ -295,7 +319,8 @@ export const routeTree = rootRoute
         "/_layout/_main-layout/",
         "/_layout/_main-layout/(user)/profile",
         "/_layout/_main-layout/event/$eventID",
-        "/_layout/_main-layout/(orders)/order/$code"
+        "/_layout/_main-layout/(orders)/order/$code",
+        "/_layout/_main-layout/event/checkout/$eventID"
       ]
     },
     "/_layout/_main-layout/_auth": {
@@ -328,6 +353,10 @@ export const routeTree = rootRoute
     "/_layout/_main-layout/_auth/(orders)/my-orders": {
       "filePath": "_layout/_main-layout/_auth/(orders)/my-orders.tsx",
       "parent": "/_layout/_main-layout/_auth"
+    },
+    "/_layout/_main-layout/event/checkout/$eventID": {
+      "filePath": "_layout/_main-layout/event/checkout.$eventID.tsx",
+      "parent": "/_layout/_main-layout"
     }
   }
 }
