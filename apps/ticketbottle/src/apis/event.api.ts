@@ -11,6 +11,19 @@ export interface GetEventsOptions {
   perPage?: number;
 }
 
+export enum ReccomendEventTime {
+  // eslint-disable-next-line no-unused-vars
+  THIS_WEEK = 'this_week',
+  // eslint-disable-next-line no-unused-vars
+  THIS_MONTH = 'this_month',
+}
+
+export interface GetRecommendEventListOptions {
+  limit?: number;
+  eventId?: string;
+  at?: ReccomendEventTime;
+}
+
 const eventAPI = {
   getEvents: async (options?: GetEventsOptions): Promise<EventListResponse> => {
     return await axiosClient.get('/event', { params: options });
@@ -23,6 +36,12 @@ const eventAPI = {
     ApiResponse<EventListByCategory[]>
   > => {
     return await axiosClient.get(`/event/categories`);
+  },
+
+  getRecommendEventList: async (
+    opt: GetRecommendEventListOptions
+  ): Promise<ApiResponse<Event[]>> => {
+    return await axiosClient.get(`/event/recommended`, { params: opt });
   },
 
   getTicketClassByEventID: async (

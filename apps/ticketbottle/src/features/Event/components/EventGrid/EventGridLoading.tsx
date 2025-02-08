@@ -13,7 +13,7 @@ const EventGridLoading: React.FC = () => {
       w="full"
       my={4}
     >
-      {[...Array(8)].map((i: number) => {
+      {Array.from({ length: 10 }, (_, i) => i + 1).map((i: number) => {
         return (
           <Stack gap="4" key={i}>
             <Skeleton height="200px" />

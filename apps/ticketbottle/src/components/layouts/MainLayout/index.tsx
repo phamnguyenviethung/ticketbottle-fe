@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Container } from '@chakra-ui/react';
 import Footer from './Footer';
 import Header from './Header';
 
@@ -15,9 +15,12 @@ const MainLayout: React.FC<Props> = ({ children }) => {
       <Box h={`${HEADER_HEIGHT}px`}>
         <Header />
       </Box>
-      <Box py={4} minH={`calc(100vh - ${FOOTER_HEIGHT + HEADER_HEIGHT}px)`}>
+      <Container
+        py={4}
+        minH={`calc(100vh - ${FOOTER_HEIGHT + HEADER_HEIGHT}px)`}
+      >
         {children}
-      </Box>
+      </Container>
       <Box h={`${FOOTER_HEIGHT}px`}>
         <Footer />
       </Box>
