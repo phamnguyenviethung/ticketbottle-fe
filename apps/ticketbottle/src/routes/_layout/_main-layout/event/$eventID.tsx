@@ -21,14 +21,9 @@ function RouteComponent() {
     select: (res) => res.data,
   });
 
-  const ticketClass = useQuery({
-    queryKey: ['ticketClass', eventID],
-    queryFn: () => eventAPI.getTicketClassByEventID(eventID),
-    enabled: !!eventID,
-    select: (res) => res.data,
-  });
 
-  if (event.isLoading || ticketClass.isLoading) {
+
+  if (event.isLoading) {
     return <PageLoader />;
   }
 
@@ -37,7 +32,7 @@ function RouteComponent() {
   }
 
   return (
-    <Stack w="full" gap={32}>
+    <Stack w="full" gap={20}>
       <EventDetailHeader event={event.data} />
       <EventDetailBody event={event.data} />
       <EventDetailRecommendSection eventId={eventID} />

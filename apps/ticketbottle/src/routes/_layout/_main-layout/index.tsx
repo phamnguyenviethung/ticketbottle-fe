@@ -14,6 +14,10 @@ function Index() {
   const { query } = useEventList({ apiParams: { perPage: 10 } });
   const { query: newQuery } = useEventListByCategory();
 
+  if (query.isError || newQuery.isError) {
+    throw new Error('Error loading data');
+  }
+
   return (
     <Box>
       <Stack gap={16} w="full">
